@@ -1,66 +1,86 @@
-import { AppBar,Toolbar, Typography, Box, Button, Menu, MenuItem, Stack } from "@mui/material"
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from "react";
-import Fade from "@mui/material/Fade";
+import { Box, Grid, Stack, Button } from "@mui/material"
+import {ReactComponent as Workbench} from "@/assets/Workbench.svg"
+import {ReactComponent as Gear} from "@/assets/Gear.svg"
+import { fontFamily } from "@/utils/commonUtils"
 
+export default function Header(){
 
-const Header = ()=>{
-    const [anchorEl, setAnchorEl] = useState(null)
-    const openMenu = Boolean(anchorEl)
-    const handleMenuClick = (e)=>{
-        setAnchorEl(e.currentTarget)
-    }
-    const handleMenuClose = ()=>{
-        setAnchorEl(null)
-    }
-    return (
-        <AppBar style={{opacity:'0.9',position:'sticky',height:'56px',justifyContent:'center'}}>    
-            <Toolbar height='100%' style={{minHeight:'0'}}>
-                {/* logo section */}
-                <Box>
-                    <Typography variant="h1">科研信息</Typography>
-                    <Typography variant="body2">Research Online</Typography>
-                </Box>
-                {/* header function section */}
-                <Stack 
-                    sx={{
-                        flex: '1'
+    const styledButton = {
+        borderRadius: '100px',
+        backgroundColor: 'transparent',
+        color: '#36435C !important',
+        fontFamily: fontFamily,
+      };
+
+    return(
+        <Box
+          sx={{
+            height: '68px',
+            display: 'flex',
+            alignItems: 'center',
+            textAlign: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#EFF4F9',
+            fontFamily: fontFamily,
+          }}
+        >
+          <Grid container spacing={0}>
+            <Grid xs={3}>
+              <Stack
+                direction='row'
+                spacing={2}
+                alignItems='center'
+                sx={{ height: '100%', ml: '20px' }}
+              >
+                <Button sx={styledButton}>
+                  <Gear />
+                  <span
+                    style={{
+                      marginLeft: '12px',
+                      fontStyle: 'normal',
+                      fontSize: '12px',
+                      lineHeight: 1.67,
                     }}
-                    direction={'row'}
-                    justifyContent={'end'}
+                  >
+                    平台管理
+                  </span>
+                </Button>
+                <Button sx={styledButton}>
+                  <Workbench />
+                  <span
+                    style={{
+                      marginLeft: '12px',
+                      fontStyle: 'normal',
+                      fontSize: '12px',
+                      lineHeight: 1.67,
+                    }}
+                  >
+                    工作台
+                  </span>
+                </Button>
+              </Stack>
+            </Grid>  
+            <Grid xs={6}>
+              <Stack
+                direction='row'
+                spacing={6}
+                justifyContent='center'
+                alignItems='center'
+              >
+                <Box
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: '30px',
+                    color: '#242e42',
+                    fontFamily: 'Segoe Print',
+                  }}
                 >
-                    <Button 
-                        id="user-menu-button"
-                        // style={{padding:'0'}}
-                        variant="contained"
-                        disableElevation
-                        aria-controls={openMenu ? 'user-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openMenu ? 'true' : undefined}
-                        onClick={handleMenuClick}
-                        startIcon={<AccountCircleOutlinedIcon style={{fontSize:'30px'}}/>} 
-                        endIcon={<KeyboardArrowDownIcon/>}
-                    >
-                    </Button>
-                    <Menu
-                        id="user-menu"
-                        anchorEl={anchorEl}
-                        open={openMenu}
-                        MenuListProps={{
-                            'aria-labelledby': 'user-menu-button'
-                        }}
-                        onClose={handleMenuClose}
-                        TransitionComponent={Fade}
-                    >
-                        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-                    </Menu>         
-                </Stack>
-            </Toolbar>
-        </AppBar>
+                  Scientific Management Platform
+                </Box>
+              </Stack>
+            </Grid>
+            <Grid xs={3}></Grid>
+          </Grid>
+        </Box>
     )
 }
-
-export default Header

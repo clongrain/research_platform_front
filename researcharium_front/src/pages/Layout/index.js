@@ -1,36 +1,43 @@
 import Header from './Header';
-import { Box} from '@mui/material';
+import { Box, Divider, Stack} from '@mui/material';
 import SideBar from './SideBar';
 import { Outlet } from 'react-router-dom';
 
 const Layout = ()=>{
-    return (
-        <Box display={'flex'} flexWrap={'wrap'}>
-            {/* header */}
-            <Box width={"100%"}>
-                <Header></Header>
-            </Box>
+  return (
+    <>
+      {/* header */}
+      <Header/>
+     
+      <Divider
+        sx={{
+          height: '1.5px',
+          borderStyle: 'solid',
+          borderSidth: '1px 0 0',
+          borderImageSource:
+            'radial-gradient(circle at 50% 3%,rgba(193,201,209,.53),hsla(0,0%,100%,.2))',
+          borderImageSlice: 1
+        }}
+      />
 
-            {/* body */}
-            <Box display={'flex'} width={'100%'}>
-                {/* navigation */}
-                <Box minWidth={'220px'} overflow={'auto'}>
-                    <SideBar/>
-                </Box>
-
-                {/* content */}
-                <Box flexGrow={1} padding={'10px'} overflow={'hidden'}>
-                    <Outlet/>
-                {/* <GlobalPagination/> */}
-                </Box>
+      {/* body */}
+      <Stack direction='row' spacing={0} justifyContent='space-between'>
+        {/* navigation */}
+        <SideBar/>
+        {/* content */}
+        <Box sx={{ backgroundColor: '#eff4f9', width: 'calc(100% - 230px)' }}>
+          <Box sx={{ display: 'block' }}>
+            <Box sx={{ padding: '20px' }}>
+              <Outlet />
             </Box>
+          </Box>
+        </Box>
+      </Stack>
 
-            {/* footer */}
-            <Box>
-                {/* <Footer></Footer> */}
-            </Box>
-    </Box>
-    )
+      {/* footer */}
+      <Box></Box>
+    </>
+  )
 }
 
 export default Layout

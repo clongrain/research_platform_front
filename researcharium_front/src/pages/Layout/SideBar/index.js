@@ -1,10 +1,22 @@
-import MenuList from "./MenuList";
+import { Box } from "@mui/material";
+import Menu from "./Menu";
+import LogoSection from "./LogoSection";
 
-function SideBar(props) {
+export default function SideBar() {
   
   return (
-    <MenuList></MenuList>
+    <Box
+      sx={{
+        paddingLeft: '20px',
+        width: '230px',
+        backgroundColor: '#eff4f9',
+      }}
+    >
+      <Box sx={{maxWidth:'220px'}}>
+        <LogoSection/>
+        <Menu/>
+      </Box>
+    </Box>
   )
 }
 
-export default SideBar;

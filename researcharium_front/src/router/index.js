@@ -12,11 +12,11 @@ const router = createBrowserRouter([
                 element:<StudentTable/>
             },
             {
-                path:'users',
+                path:'student',
                 element:<StudentTable/>
             },
             {
-                path:'achievements',
+                path:'achievement',
                 element:<></>
             },
             {
