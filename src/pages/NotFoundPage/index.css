@@ -1,0 +1,9 @@
+.back{
+  background-image: url(/src/assets/ErrorAlienSpaceship.svg);
+  height: 600px;
+  width: 600px;
+  background-repeat: no-repeat;
+  position: relative;
+  /* width: 1000px;
+  height: 1000px; */
+}

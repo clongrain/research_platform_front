@@ -1,0 +1,18 @@
+.text {
+  /* background-image: -webkit-linear-gradient(left, #6366F1,#E255D0 8%,#FF609E 16%,#FF8F70 24%,#FFC659 33%,#F9F871 41%,#6366F1 49%,#E255D0 57%,#FF609E 66%,#FF8F70 74%,#FFC659 82%,#F9F871 90%,#6366F1); */
+  background-image: -webkit-linear-gradient(left, #6366f1, #7165ef 10%, #7d64ec 20%, #8863ea 30%, #9262e7 40%,#6366f1 50%, #7165ef 60%, #7d64ec 70%, #8863ea 80%, #9262e7 90%,#6366f1);
+  
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-background-size: 200% 100%;
+  -webkit-animation: maskedAnimation 4s infinite linear;
+}
+@keyframes maskedAnimation {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
