@@ -1,10 +1,10 @@
-# 使用官方Node.js的Docker镜像作为基础镜像
-FROM node:14
+# 阶段 1: 构建阶段
+FROM node:14 AS build
 
 # 设置工作目录
 WORKDIR /app
 
-# 复制package.json和package-lock.json到工作目录
+# 复制 package.json 和 package-lock.json
 COPY package*.json ./
 
 # 安装项目依赖
@@ -13,12 +13,17 @@ RUN npm install
 # 复制项目文件到工作目录
 COPY . .
 
-# 构建React应用为生产版本
+# 构建 React 应用
 RUN npm run build
 
-# 设置环境变量，指定运行的端口
-ENV PORT=3000
-EXPOSE 3000
+# 阶段 2: 生产阶段
+FROM nginx:alpine
 
-# 启动应用
-CMD ["npm", "start"]
+# 复制构建好的静态文件到 Nginx 服务器
+COPY --from=build /app/build /usr/share/nginx/html
+
+# 暴露 Nginx 端口
+EXPOSE 80
+
+# 启动 Nginx
+CMD ["nginx", "-g", "daemon off;"]
