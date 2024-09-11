@@ -12,12 +12,12 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import supabase, { USER_TYPE } from "@/config";
 import storgeUtils from "@/utils/storageUtils";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { menuChange } from "@/action/MenuChangeAction";
 export default function Header(props) {
   const { handleMenuOpenChange } = props
   const computer = useMediaQuery('(min-width:1200px)')
-  const [userName, setUserName] = useState("")
+  const userName = storgeUtils.getUser().name || ""
   const [notifications, SetNotifications] = useState([])
   const [anchorEl3, setAnchorEl3] = useState(null)
   const display3 = Boolean(anchorEl3)
@@ -47,10 +47,6 @@ export default function Header(props) {
     dispatch(menuChange('/users/' + urlField + '/details'))
     navigate('/users/' + urlField + '/details/' + storgeUtils.getUser().user_id)
   }
-  useEffect(()=>{
-    if(storgeUtils.getUser().user_type===USER_TYPE.ADMIN) setUserName("管理")
-    else setUserName(storgeUtils.getUser().name)
-  })
   return (
     <Box component={'header'}
       sx={{

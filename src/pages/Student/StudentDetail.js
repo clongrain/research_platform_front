@@ -136,10 +136,13 @@ export default function StudentDetail() {
   useEffect(() => {
     fetchData()
   }, [])
-  const keys = user && Object.keys(user).filter((key) => {
+  const showFields = ["姓名", "性别", "民族", "邮箱", "电话号码", "身份证号码", "学号", "生日", "毕业学校", "毕业专业", "学生类型", "入学日期", "状态"]
+  const keys = ['name', 'gender', 'ethnicity', 'email', 'phone', 'identity_card', 'student_id', 'birthdate', 'university', 'department', 'graduate_type', 'enrollment_date', 'status']
+  keys.filter((key) => {
+    const isOwn = storageUtils.getUser().user_id + '' === id
     if (storageUtils.getUser().user_type === USER_TYPE.ADMIN) return key
-    if (!canUpdate && !key.includes('user_id') && !key.includes('identity_card')) return key
-    if(canUpdate && !key.includes('user_id')) return key
+    if (!isOwn && !key.includes('user_id') && !key.includes('identity_card')) return key
+    if (isOwn && !key.includes('user_id')) return key
   })
   if (!user) return (<></>)
   return (
@@ -211,7 +214,7 @@ export default function StudentDetail() {
                         <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z" />
                       </svg>
                     </Avatar>
-                  } title="Basic details" titleTypographyProps={{ sx: { fontSize: '1.2rem', fontWeight: 500 } }}
+                  } title="基本信息" titleTypographyProps={{ sx: { fontSize: '1.2rem', fontWeight: 500 } }}
                     action={<IconButton disabled={storageUtils.getUser().user_id !== user.user_id} onClick={() => setEditing(true)}><CreateOutlinedIcon /></IconButton>}
                   />
                   <Stack>
@@ -234,7 +237,7 @@ export default function StudentDetail() {
                                   lineHeight: 1.57,
                                   fontSize: '0.875rem',
                                   fontWeight: 400
-                                }}>{key}</Typography>
+                                }}>{showFields[index]}</Typography>
                                 <Typography sx={{
                                   color: '#212636',
                                   lineHeight: 1.57,
@@ -260,6 +263,10 @@ export default function StudentDetail() {
                             onChange={(e) => { setEditUser({ ...editUser, email: e.target.value }) }} />
                           <StyledEditTextField fullWidth label='电话号码' value={editUser.phone || ''}
                             onChange={(e) => { setEditUser({ ...editUser, phone: e.target.value }) }} />
+                          {
+                            storageUtils.getUser().user_id + '' === id && <StyledEditTextField fullWidth label='身份证号码' value={editUser.identity_card || ''}
+                              onChange={(e) => { setEditUser({ ...editUser, identity_card: e.target.value }) }} />
+                          }
                           <DatePicker label='出生日期' format="YYYY-MM-DD" views={['year', 'month', 'day']} value={dayjs(editUser.birthdate)}
                             sx={{
                               'label': {
@@ -305,7 +312,7 @@ export default function StudentDetail() {
                             onChange={(e) => { setEditUser({ ...editUser, department: e.target.value }) }} />
                           <StyledEditTextField fullWidth label='学号' value={editUser.student_id || ''}
                             onChange={(e) => { setEditUser({ ...editUser, student_id: e.target.value }) }} />
-                          <StyledEditTextField fullWidth label={userType == USER_TYPE.STUDNET ? '学生类型' : (userType == USER_TYPE.TEACHER ? '导师类型' : '用户类型')} value={editUser.graduate_type || ''}
+                          <StyledEditTextField fullWidth label={'学生类型'} value={editUser.graduate_type || ''}
                             onChange={(e) => { setEditUser({ ...editUser, graduate_type: e.target.value }) }} />
                           <DatePicker label={userType == USER_TYPE.STUDNET ? '入学时间' : (userType == USER_TYPE.TEACHER ? '入职时间' : '注册时间')}
                             format="YYYY-MM-DD" views={['year', 'month', 'day']} value={dayjs(editUser.enrollment_date)}
@@ -399,7 +406,7 @@ export default function StudentDetail() {
                     <Avatar sx={{ bgcolor: '#fff', color: '#434a60', boxShadow: '0px 3px 14px rgba(0, 0, 0, 0.08)' }}>
                       <WidgetsOutlinedIcon />
                     </Avatar>
-                  } title="Achievement List" titleTypographyProps={{ sx: { fontSize: '1.2rem', fontWeight: 500 } }}
+                  } title="成果" titleTypographyProps={{ sx: { fontSize: '1.2rem', fontWeight: 500 } }}
                   />
                   <Stack sx={{
                     padding: '16px 24px 40px'
@@ -466,7 +473,7 @@ export default function StudentDetail() {
                     <Avatar sx={{ bgcolor: '#fff', color: '#434a60', boxShadow: '0px 3px 14px rgba(0, 0, 0, 0.08)' }}>
                       <WidgetsOutlinedIcon />
                     </Avatar>
-                  } title="Projects" titleTypographyProps={{ sx: { fontSize: '1.2rem', fontWeight: 500 } }}
+                  } title="参与项目" titleTypographyProps={{ sx: { fontSize: '1.2rem', fontWeight: 500 } }}
                   />
                   <Stack sx={{
                     padding: '16px 24px 40px'

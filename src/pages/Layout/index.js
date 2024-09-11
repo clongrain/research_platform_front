@@ -20,6 +20,16 @@ const Layout = () => {
     setMenuOpen(!menuOpen)
   }
   useEffect(() => {
+    
+    const [navigation] = performance.getEntriesByType('navigation');
+      
+    if (navigation) {
+      if (navigation.type === 'reload') {
+        dispatch(menuChange(window.location.pathname))
+      } else {
+        console.log('页面是首次加载');
+      }
+    }
     window.onpopstate = () => {
       dispatch(menuChange(window.location.pathname))
     }

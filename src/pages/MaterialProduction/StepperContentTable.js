@@ -27,37 +27,37 @@ export default function StepperContentTable({ handleBack, handleNext }) {
 
     if (conferencePaper.data && conferencePaper.data.length > 0) {
       conferencePaper.data[0].conference_paper.forEach((item, index) => {
-        const achievement = { 'id': item.id, 'name': item.title, 'type': '会议论文', 'role': conferencePaper.data[0].user_conference_paper[index].participation_type, 'finishTime': item.publication_date, 'index': index }
+        const achievement = { 'id': item.id, 'name': item.title, 'type': '会议论文', 'role': conferencePaper.data[0].user_conference_paper[index].participation_type, 'finishTime': item.publication_date, 'index': index, 'storagePath':item.storage_path }
         newAchievements.push(achievement)
       })
     }
     if (journalPaper.data && journalPaper.data.length > 0) {
       journalPaper.data[0].journal_paper.forEach((item, index) => {
-        const achievement = { 'id': item.id, 'name': item.title, 'type': '期刊论文', 'role': journalPaper.data[0].user_journal_paper[index].participation_type, 'finishTime': item.publication_date, 'index': index }
+        const achievement = { 'id': item.id, 'name': item.title, 'type': '期刊论文', 'role': journalPaper.data[0].user_journal_paper[index].participation_type, 'finishTime': item.publication_date, 'index': index, 'storagePath':item.storage_path }
         newAchievements.push(achievement)
       })
     }
     if (monograph.data && monograph.data.length > 0) {
       monograph.data[0].monograph.forEach((item, index) => {
-        const achievement = { 'id': item.id, 'name': item.title, 'type': '专著', 'role': monograph.data[0].user_monograph[index].participation_type, 'finishTime': item.publication_date, 'index': index }
+        const achievement = { 'id': item.id, 'name': item.title, 'type': '专著', 'role': monograph.data[0].user_monograph[index].participation_type, 'finishTime': item.publication_date, 'index': index, 'storagePath':item.storage_path }
         newAchievements.push(achievement)
       })
     }
     if (award.data && award.data.length > 0) {
       award.data[0].award.forEach((item, index) => {
-        const achievement = { 'id': item.id, 'name': item.title, 'type': '获奖', 'role': award.data[0].user_award[index].participation_type, 'finishTime': item.presentation_date, 'index': index }
+        const achievement = { 'id': item.id, 'name': item.title, 'type': '获奖', 'role': award.data[0].user_award[index].participation_type, 'finishTime': item.presentation_date, 'index': index, 'storagePath':item.storage_path }
         newAchievements.push(achievement)
       })
     }
     if (patent.data && patent.data.length > 0) {
       patent.data[0].patent.forEach((item, index) => {
-        const achievement = { 'id': item.id, 'name': item.title, 'type': '专利', 'role': patent.data[0].user_patent[index].participation_type, 'finishTime': item.authorization_date, 'index': index }
+        const achievement = { 'id': item.id, 'name': item.title, 'type': '专利', 'role': patent.data[0].user_patent[index].participation_type, 'finishTime': item.authorization_date, 'index': index, 'storagePath':item.storage_path }
         newAchievements.push(achievement)
       })
     }
     if (softwareCopyright.data && softwareCopyright.data.length > 0) {
       softwareCopyright.data[0].software_copyright.forEach((item, index) => {
-        const achievement = { 'id': item.id, 'name': item.title, 'type': '软著', 'role': softwareCopyright.data[0].user_software_copyright[index].participation_type, 'finishTime': item.registration_date, 'index': index }
+        const achievement = { 'id': item.id, 'name': item.title, 'type': '软著', 'role': softwareCopyright.data[0].user_software_copyright[index].participation_type, 'finishTime': item.registration_date, 'index': index, 'storagePath':item.storage_path }
         newAchievements.push(achievement)
       })
     }

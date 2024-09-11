@@ -111,3 +111,9 @@ export const onChangeChecked = (pos, selected, setSelected, setSelectedAll) => {
   }))
   setSelectedAll(flag)
 }
+export const UPDATE_USER_NAME = "UPDATE_USER_NAME"
+export const updateUserName = (userName)=>{
+  return dispatch => {
+    dispatch({type:UPDATE_USER_NAME, data:userName})
+  }
+}

@@ -26,10 +26,7 @@ const MenuItem = ({ item }) => {
     lineHeight: '24px',
     fontWeight: 500,
     fontFamily:
-      'PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,微软雅黑,STHeitiSC-Light,simsun,宋体,WenQuanYi Zen Hei,WenQuanYi Micro Hei,sans-serif',
-    // ':hover': {
-    //   color: '#55bc8a',
-    // },
+      'PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,微软雅黑,STHeitiSC-Light,simsun,宋体,WenQuanYi Zen Hei,WenQuanYi Micro Hei,sans-serif'
   };
 
   const styledIcon = {

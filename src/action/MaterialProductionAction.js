@@ -19,30 +19,35 @@ export function setMaterialAchievements(achievements) {
     dispatch({ type: SET_ACHIEVEMENTS, data: achievements })
   }
 }
-export function generateMaterial(order, achievements, materialType) {
-  const databody = {
-    conferencePaper: [], journalPaper: [], award: [], patent: [], monograph: [], softwareCopyright: [], materialType: materialType
-  }
+export function generateMaterial(order = [], achievements, materialType) {
+
+  const conferencePaper = [], journalPaper = [], award = [], patent = [], monograph = [], softwareCopyright = []
+
   achievements.forEach(item => {
-    if (item.type === '会议论文') databody.conferencePaper.push('' + item.id)
-    else if (item.type === '期刊论文') databody.journalPaper.push('' + item.id)
-    else if (item.type === '获奖') databody.award.push('' + item.id)
-    else if (item.type === '专利') databody.patent.push('' + item.id)
-    else if (item.type === '专著') databody.monograph.push('' + item.id)
-    else if (item.type === '软著') databody.softwareCopyright.push('' + item.id)
+    if (item.type === '会议论文') conferencePaper.push(item.storagePath)
+    else if (item.type === '期刊论文') journalPaper.push(item.storagePath)
+    else if (item.type === '获奖') award.push(item.storagePath)
+    else if (item.type === '专利') patent.push(item.storagePath)
+    else if (item.type === '专著') monograph.push(item.storagePath)
+    else if (item.type === '软著') softwareCopyright.push(item.storagePath)
   });
-  databody['order'] = order.map((item) => {
-    if (item === '会议论文') return 'conferencePaper'
-    else if (item === '期刊论文') return 'journalPaper'
-    else if (item === '获奖') return 'award'
-    else if (item === '专利') return 'patent'
-    else if (item === '专著') return 'monograph'
-    else if (item === '软著') return 'softwareCopyright'
-    else return ''
+  const paths = []
+  order.forEach((item) => {
+    if (item === '会议论文') paths.push(...conferencePaper)
+    else if (item === '期刊论文') paths.push(...journalPaper)
+    else if (item === '获奖') paths.push(...award)
+    else if (item === '专利') paths.push(...patent)
+    else if (item === '专著') paths.push(...monograph)
+    else if (item === '软著') paths.push(...softwareCopyright)
   })
+
+  const body = {
+    materialType:materialType,
+    paths:paths
+  }
   return async dispatch => {
     try {
-      var response = await axios_instance.post('/material/new', databody, {
+      var response = await axios_instance.post('/material/new', body, {
         responseType: 'blob',
         headers: {
           'Content-Type': 'application/json',

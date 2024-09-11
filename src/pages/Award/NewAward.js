@@ -83,7 +83,7 @@ export default function NewAward() {
         mb: '40px'
       }}>
         <Box>
-          <Link to={'/achievements/conference-awards'} style={{
+          <Link to={'/achievements/awards'} style={{
             display: 'flex',
             alignItems: 'center',
             fontSize: '16px',

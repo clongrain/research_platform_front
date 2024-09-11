@@ -1,3 +1,4 @@
+import { updateUserName } from "@/action/CommonAction";
 import StyledAutocomplete from "@/components/Input/StyledAutocomplete";
 import StyledEditTextField from "@/components/Input/StyledEditTextField";
 import { messageAPI } from "@/components/Message";
@@ -6,8 +7,10 @@ import { fontFamily, isChinese } from "@/utils/commonUtils";
 import storgeUtils from "@/utils/storageUtils";
 import { Button, Modal, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function UserSelectModal({ open, setOpen }) {
+  const dispatch = useDispatch()
   const options = [
     {
       type: USER_TYPE.STUDNET,
@@ -39,14 +42,16 @@ export default function UserSelectModal({ open, setOpen }) {
       messageAPI.error({ text: '保存用户类型失败' })
     }
     else if (data && data.length > 0) {
-      storgeUtils.saveUser(data.at(0))
       messageAPI.success({ text: '保存用户类型成功' })
       if (userTypeValue.type === USER_TYPE.STUDNET) {
-        await supabase.from('user_student').insert({ user_id: user.user_id, email: user.email, status: 'Active', name: userName })
+        const stu = await supabase.from('user_student').insert({ user_id: user.user_id, email: user.email, status: 'Active', name: userName }).select()
+        if(stu.data) storgeUtils.saveUser(stu.data.at(0))
       }
       else if (userTypeValue.type === USER_TYPE.TEACHER) {
-        await supabase.from('user_teacher').insert({ user_id: user.user_id, email: user.email, status: 'Active', name: userName })
+        const tea = await supabase.from('user_teacher').insert({ user_id: user.user_id, email: user.email, status: 'Active', name: userName }).select()
+         if(tea.data) storgeUtils.saveUser(tea.data.at(0))
       }
+      dispatch(updateUserName(userName))
       setOpen(false)
     }
   }

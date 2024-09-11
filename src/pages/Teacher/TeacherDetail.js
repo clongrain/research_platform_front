@@ -23,7 +23,7 @@ export default function TeacherDetail() {
   const { id } = useParams()
   const [user, setUser] = useState(null)
   //判断用户是否可以编辑该信息，此处逻辑规则有些松
-  const [canUpdate, setCanUpdate] = useState(storageUtils.getUser().user_id+''===id)
+  const [canUpdate, setCanUpdate] = useState(storageUtils.getUser().user_id + '' === id)
   const [editUser, setEditUser] = useState(null)
   const userType = useLocation().pathname.includes('students') ? USER_TYPE.STUDNET : USER_TYPE.TEACHER
   const [achievements, setAchievements] = useState([])
@@ -135,8 +135,11 @@ export default function TeacherDetail() {
   useEffect(() => {
     fetchData()
   }, [])
-  const keys = user && Object.keys(user).filter((key) => {
-    if(storageUtils.getUser().user_type===USER_TYPE.ADMIN) return key
+  const showFields = ["姓名", "性别", "民族", "邮箱", "电话号码", "身份证号码", "工号", "生日", "毕业学校", "毕业专业", "职称", "入职日期", "办公地址", "研究兴趣", "状态"]
+  const keys = ['name', 'gender', 'ethnicity', 'email', 'phone', 'identity_card', 'teacher_id', 'birthdate', 'university', 'department', 'professional_title', 'enrollment_date', 'office_address', 'research_interests', 'status']
+
+  keys.filter((key) => {
+    if (storageUtils.getUser().user_type === USER_TYPE.ADMIN) return key
     if (!canUpdate && !key.includes('identity_card') && !key.includes('user_id')) {
       return key
     }
@@ -237,7 +240,7 @@ export default function TeacherDetail() {
                                   lineHeight: 1.57,
                                   fontSize: '0.875rem',
                                   fontWeight: 400
-                                }}>{key}</Typography>
+                                }}>{showFields[index]}</Typography>
                                 <Typography sx={{
                                   color: '#212636',
                                   lineHeight: 1.57,
@@ -259,12 +262,13 @@ export default function TeacherDetail() {
                             onChange={(e) => { setEditUser({ ...editUser, gender: e.target.value }) }} />
                           <StyledEditTextField fullWidth label='民族' value={editUser.ethnicity || ''}
                             onChange={(e) => { setEditUser({ ...editUser, ethnicity: e.target.value }) }} />
-                          <StyledEditTextField fullWidth label='身份证号' value={editUser.identity_card || ''}
-                            onChange={(e) => { setEditUser({ ...editUser, identity_card: e.target.value }) }} />
                           <StyledEditTextField fullWidth label='邮箱' value={editUser.email || ''}
                             onChange={(e) => { setEditUser({ ...editUser, email: e.target.value }) }} />
                           <StyledEditTextField fullWidth label='电话号码' value={editUser.phone || ''}
                             onChange={(e) => { setEditUser({ ...editUser, phone: e.target.value }) }} />
+                          {storageUtils.getUser().user_id + '' === id && <StyledEditTextField fullWidth label='身份证号' value={editUser.identity_card || ''}
+                            onChange={(e) => { setEditUser({ ...editUser, identity_card: e.target.value }) }} />
+                          }
                           <DatePicker label='出生日期' format="YYYY-MM-DD" views={['year', 'month', 'day']} value={dayjs(editUser.birthdate)}
                             sx={{
                               'label': {
@@ -365,7 +369,7 @@ export default function TeacherDetail() {
                                 borderRadius: '10px',
                                 padding: '8px 16px',
                                 border: '1px solid rgba(145, 158, 171, 0.32)',
-                              }} onClick={() => { setEditUser(user) }}>
+                              }} onClick={() => {setEditing(false); setEditUser(user) }}>
                                 Exit Editing
                               </Button>
                             </Grid>

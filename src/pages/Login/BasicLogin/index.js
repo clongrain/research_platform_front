@@ -60,7 +60,6 @@ export default function BasicLogin() {
       messageAPI.success({ title: 'Success', text: "You have successfully logged in :)" })
 
       const result = (await supabase.from('user').select().eq('user_uuid', data.session.user.id))
-      
       if(result.data.at(0).user_type===USER_TYPE.STUDNET){
         const student = await supabase.from('user_student').select().eq('user_id',result.data.at(0).user_id)
         storgeUtils.saveUser({...student.data.at(0), user_type:USER_TYPE.STUDNET})
@@ -69,7 +68,9 @@ export default function BasicLogin() {
         const student = await supabase.from('user_teacher').select().eq('user_id',result.data.at(0).user_id)
         storgeUtils.saveUser({...student.data.at(0), user_type:USER_TYPE.TEACHER})
       }
-      else storgeUtils.saveUser(result.data.at(0).delete('password'))
+      else {
+        delete result.data.at(0)['password']
+        storgeUtils.saveUser(result.data.at(0))}
       setTimeout(() => { navigate('/users/students'); dispathch(menuChange('/users/students')) }, 1000)
     }
   };
