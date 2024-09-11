@@ -1,5 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
-const supabase = createClient(process.env.REACT_APP_SUPABASE_URL, process.env.REACT_APP_SUPABASE_KEY)
+const supabase = createClient(window.location.hostname.startsWith('192.168.')
+? process.env.SUPABASE_URL_INTERNAL
+: process.env.SUPABASE_URL_VPN, process.env.SUPABASE_KEY)
 
 export default supabase;
 
